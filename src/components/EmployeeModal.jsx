@@ -1,51 +1,7 @@
-import { useState } from "react";
+function EmployeeModal({isOpen,employee,onClose}) {
 
-function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    phone: "",
-    gender: "",
-    department: "",
-  });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-
-  function handleCancel() {
-    onCloseAddModal();
-    setFormData({
-      name: "",
-      email: "",
-      address: "",
-      phone: "",
-      gender: "",
-      department: "",
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onAddEmployee(formData);
-    onCloseAddModal();
-    setFormData({
-      name: "",
-      email: "",
-      address: "",
-      phone: "",
-      gender: "",
-      department: "",
-    });
-  }
 
   if (!isOpen) return null;
-
   return (
     <>
       <div id="addEmployeeModal" className="modal fade show">
@@ -53,9 +9,9 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
           <div className="modal-content">
             <form onSubmit={handleSubmit}>
               <div className="modal-header">
-                <h4 className="modal-title">Add Employee</h4>
+                <h4 className="modal-title">Edit Employee</h4>
                 <button
-                  onClick={onCloseAddModal}
+                  onClick={onCloseEditModal}
                   type="button"
                   className="close"
                   data-dismiss="modal"
@@ -161,7 +117,7 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-success">
-                  Add
+                  Update
                 </button>
               </div>
             </form>
@@ -173,4 +129,6 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
   );
 }
 
-export default AddEmployeeModal;
+export default EmployeeModal;
+
+

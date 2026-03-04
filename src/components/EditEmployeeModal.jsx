@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
+function EditEmployeeModal({
+  isOpen,
+  employee,
+  onCloseEditModal,
+  onEditEmployee,
+}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -9,6 +14,11 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
     gender: "",
     department: "",
   });
+
+  useEffect(() => {
+    if (employee)
+       setFormData(employee);
+  }, [employee]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -19,7 +29,7 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
   }
 
   function handleCancel() {
-    onCloseAddModal();
+    onCloseEditModal();
     setFormData({
       name: "",
       email: "",
@@ -32,8 +42,8 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddEmployee(formData);
-    onCloseAddModal();
+    onEditEmployee(formData);
+    onCloseEditModal();
     setFormData({
       name: "",
       email: "",
@@ -45,7 +55,6 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
   }
 
   if (!isOpen) return null;
-
   return (
     <>
       <div id="addEmployeeModal" className="modal fade show">
@@ -53,9 +62,9 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
           <div className="modal-content">
             <form onSubmit={handleSubmit}>
               <div className="modal-header">
-                <h4 className="modal-title">Add Employee</h4>
+                <h4 className="modal-title">Edit Employee</h4>
                 <button
-                  onClick={onCloseAddModal}
+                  onClick={onCloseEditModal}
                   type="button"
                   className="close"
                   data-dismiss="modal"
@@ -161,7 +170,7 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-success">
-                  Add
+                  Update
                 </button>
               </div>
             </form>
@@ -173,4 +182,4 @@ function AddEmployeeModal({ isOpen, onCloseAddModal, onAddEmployee }) {
   );
 }
 
-export default AddEmployeeModal;
+export default EditEmployeeModal;
